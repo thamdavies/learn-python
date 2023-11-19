@@ -7,7 +7,7 @@ class App:
 
     def __init__(self, name):
         self.__name = name
-        self.__users = []
+        self.__users = User.all
         self.__user = None
 
     def name(self):
@@ -25,27 +25,56 @@ class App:
         while choice not in self.EXIT_KEYS:
             choice = input("Enter your choice: ")
             if choice == '1':
-                print("Withdrawal")
+                self.__withdrawal()
             elif choice == '2':
-                print("Transfer")
+                self.__transfer()
             elif choice == '3':
-                print("Check Balance")
+              self.__check_balance()
             elif choice == '4':
                 print("Export data (CSV, Excel, PDF)")
             elif choice == '5':
-               self.user_details() 
+               self.__user_details() 
             elif choice == '6':
-                print("User list")
+                self.__user_list()
 
     # 1. Withdrawal
+    def __withdrawal(self):
+        amount = float(input("Enter amount to withdraw: "))
+        self.__user.withdraw(amount)
+        self.display_menu()
+        print("\n")
     # 2. Transfer
+    def __transfer(self):
+        amount = float(input("Enter amount to transfer: "))
+        recipient_username = input("Enter recipient username: ")
+        self.__user.transfer(amount, recipient_username)
+        self.display_menu()
+        print("\n")
     # 3. Check Balance
+    def __check_balance(self):
+        print(f"\nYour current balance is: {self.__user.fm_account_balance()}\n")
+        self.display_menu()
+        print("\n")
+
     # 4. Export data (CSV, Excel, PDF)
     # 5. User details
-    def user_details(self):
-        os.system('clear')
-        print("|--------- User details ---------|")
+    def __user_details(self):
+        print("\nUser details")
         print(self.__user)
+        print("\n")
+        self.display_menu()
+        print("\n")
+    
+    # 6. User list
+    def __user_list(self):
+        print("\nUser list")
+        for user in User.all:
+            if type(user) is User:
+                user.line_printer()
+            else:
+                User(**user).line_printer()
+
+        print("-" * 37)
         print("\n")
         self.display_menu()
         print("\n")
@@ -55,11 +84,11 @@ class App:
         # pin_code = input("Enter your pin code: ")
         name = 'tham'
         pin_code = '12345'
-        user = User.find_by_username(name)
-        if user and user.pin_code == pin_code:
+        user = User.login(name, pin_code)
+        if user:
             self.__user = user
             os.system('clear')
-            print(f"Hi {user.name}, welcome to the {self.name()}")
+            self.__user.greeting(self.__name)
             self.display_menu()
 
         else:

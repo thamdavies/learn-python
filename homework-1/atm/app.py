@@ -39,10 +39,14 @@ class App:
 
     # 1. Withdrawal
     def __withdrawal(self):
-        amount = float(input("Enter amount to withdraw: "))
-        self.__user.withdraw(amount)
-        self.display_menu()
-        print("\n")
+        try:
+            amount = float(input("Enter amount to withdraw: "))
+            self.__user.withdraw(amount)
+            self.display_menu()
+            print("\n")
+        except ValueError:
+            print("Please enter a number\n")
+
     # 2. Transfer
     def __transfer(self):
         amount = float(input("Enter amount to transfer: "))
@@ -50,6 +54,7 @@ class App:
         self.__user.transfer(amount, recipient_username)
         self.display_menu()
         print("\n")
+
     # 3. Check Balance
     def __check_balance(self):
         print(f"\nYour current balance is: {self.__user.fm_account_balance()}\n")
@@ -80,10 +85,8 @@ class App:
         print("\n")
     
     def __verify_user(self):
-        # name = input("Enter username: ")
-        # pin_code = input("Enter your pin code: ")
-        name = 'tham'
-        pin_code = '12345'
+        name = input("Enter username: ")
+        pin_code = input("Enter your pin code: ")
         user = User.login(name, pin_code)
         if user:
             self.__user = user

@@ -3,7 +3,7 @@ import atm.db as db
 class User():
     all = db.users()
 
-    def __init__(self, name, account_balance, username, pin_code, index = -1):
+    def __init__(self, name = '', account_balance = 0, username = '', pin_code = 0, index = -1):
         self.__name = name
         self.__username = username
         self.__account_balance = int(account_balance) 
@@ -66,7 +66,7 @@ class User():
         if user is None:
             print("Recipient not found\n")
             return self
-        elif user.username == self.__username:
+        elif user.username() == self.__username:
             print("You cannot transfer to yourself\n")
             return self
 
@@ -75,8 +75,6 @@ class User():
             print("Transfer cancelled\n")
             return self
 
-        print(self.index)
-        print(user.index)
         self.__account_balance -= amount
         user.increase_account_balance(amount)
 
@@ -87,7 +85,7 @@ class User():
         return self
 
     def save(self, user):
-        User.all[self.index] = user
+        User.all[user.index] = user
 
     def fm_account_balance(self):
         return '${:,}'.format(self.__account_balance)

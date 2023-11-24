@@ -28,7 +28,7 @@ class App:
 
         choice = ''
         while choice not in self.EXIT_KEYS:
-            choice = input("Enter your choice: ")
+            choice = input(f"Enter your choice ({', '.join(self.EXIT_KEYS)}): ")
             if choice == '1':
                 self.__withdrawal()
             elif choice == '2':

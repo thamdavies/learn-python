@@ -119,7 +119,7 @@ class App:
         print("1. Withdrawal")
         print("2. Transfer")
         print("3. Check Balance")
-        print("4. Export data (CSV, Excel, PDF)")
+        print("4. Export bill")
         print("5. User details")
         print("6. User list")
 

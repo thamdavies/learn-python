@@ -13,6 +13,7 @@ class App:
         self.__name = name
         self.__users = User.all
         self.__user = None
+        self.__bill = None
 
     def name(self):
         return self.__name
@@ -48,7 +49,7 @@ class App:
             self.__user.withdraw(amount)
             today = datetime.today()
             bill = Bill(today, self.__user, amount)
-            PDFExport(bill).call()
+            self.__bill = bill
             self.display_menu()
             print("\n")
         except ValueError:
@@ -70,7 +71,11 @@ class App:
 
     # 4. Export bill (PDF)
     def __export_bill(self):
-        print("\nExport bill (PDF)\n")
+        if not self.__bill:
+            print("\nNo bill to export\n")
+        else:
+            PDFExport(self.__bill).call()
+            print("\nBill exported\n")
         
         self.display_menu()
         print("\n")

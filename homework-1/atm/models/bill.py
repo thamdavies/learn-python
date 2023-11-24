@@ -13,6 +13,9 @@ class Bill:
   def user(self):
     return self.__user
 
+  def user_name(self):
+    return self.__user.name()
+
   def amount(self):
     return '${:,}'.format(self.__amount)
 

@@ -13,7 +13,7 @@ class Export:
         pdf.text(69, 34, '--------------------------------------')
         pdf.text(38, 46, f'Date: {self.bill.date()}');
         pdf.text(38, 55, f'Time: {self.bill.time()}');
-        pdf.text(38, 65, f'Card Holder Name: {self.bill.user().name()}');
+        pdf.text(38, 65, f'Card Holder Name: {self.bill.user_name()}');
         pdf.text(38, 75, f'Withdraw amount: {self.bill.amount()}');
         pdf.text(38, 85, f'Current balance: {self.bill.account_balance()}');
         pdf.output('bill.pdf')

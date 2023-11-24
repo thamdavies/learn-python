@@ -79,6 +79,7 @@ class App:
         
         self.display_menu()
         print("\n")
+
     # 5. User details
     def __user_details(self):
         print("\nUser details")

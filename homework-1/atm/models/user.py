@@ -91,8 +91,8 @@ class User():
         return '${:,}'.format(self.__account_balance)
 
     def line_printer(self):
-        print("-" * 37)
-        print(f"| {self.resize_name_width()} | {self.resize_username_width(6)} | {self.resize_account_width(6)} |")
+        print("-" * 39)
+        print(f"| {self.resize_name_width()} | {self.resize_username_width(6)} | {self.resize_account_width()} |")
      
     def resize_name_width(self, width = 13):
         return self.name() + (" " * (width - len(self.name())))

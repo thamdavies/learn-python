@@ -1,6 +1,10 @@
 import os
+from datetime import datetime
+
 from atm.models.user import User
+from atm.models.bill import Bill
 from atm.db import users
+from atm.services.pdf.export import Export as PDFExport
 
 class App:
     EXIT_KEYS = ['exit', 'e', '0']
@@ -31,7 +35,7 @@ class App:
             elif choice == '3':
               self.__check_balance()
             elif choice == '4':
-                print("Export data (CSV, Excel, PDF)")
+                self.__export_bill()
             elif choice == '5':
                self.__user_details() 
             elif choice == '6':
@@ -42,6 +46,9 @@ class App:
         try:
             amount = float(input("Enter amount to withdraw: "))
             self.__user.withdraw(amount)
+            today = datetime.today()
+            bill = Bill(today, self.__user, amount)
+            PDFExport(bill).call()
             self.display_menu()
             print("\n")
         except ValueError:
@@ -61,7 +68,12 @@ class App:
         self.display_menu()
         print("\n")
 
-    # 4. Export data (CSV, Excel, PDF)
+    # 4. Export bill (PDF)
+    def __export_bill(self):
+        print("\nExport bill (PDF)\n")
+        
+        self.display_menu()
+        print("\n")
     # 5. User details
     def __user_details(self):
         print("\nUser details")
@@ -79,7 +91,7 @@ class App:
             else:
                 User(**user).line_printer()
 
-        print("-" * 37)
+        print("-" * 39)
         print("\n")
         self.display_menu()
         print("\n")
